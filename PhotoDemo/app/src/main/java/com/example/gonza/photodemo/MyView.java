@@ -58,9 +58,11 @@ public class MyView extends View {
                 int height  = (int) (face.getHeight()*scale + y);
                 canvas.drawRect(x,y,width,height,paint);
 
+
                 for (Landmark landMark: face.getLandmarks()){
                     int cx = (int)(landMark.getPosition().x * scale);
                     int xy = (int)(landMark.getPosition().y * scale);
+                    canvas.drawCircle(cx,xy,10,paint);
                 }
             }
         }

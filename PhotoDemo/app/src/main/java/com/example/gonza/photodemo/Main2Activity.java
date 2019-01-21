@@ -3,25 +3,26 @@ package com.example.gonza.photodemo;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-
-import com.google.android.gms.vision.Frame;
-import com.google.android.gms.vision.face.Face;
-import com.google.android.gms.vision.face.FaceDetector;
-
 import android.net.Uri;
-import android.provider.MediaStore;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.View;
 import android.widget.Toast;
 
+import com.google.android.gms.vision.Frame;
+import com.google.android.gms.vision.face.Face;
+import com.google.android.gms.vision.face.FaceDetector;
+
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 
-public class MainActivity extends AppCompatActivity {
+public class Main2Activity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
     private static final int PICK_IMAGE = 100;
@@ -31,7 +32,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main2);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
     }
 
     private void detectFaces(Uri imageUri) {
@@ -52,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
         Frame frame = new Frame.Builder().setBitmap(bitMap).build();
 
         SparseArray<Face> faces = detector.detect(frame);
+        Log.d("SparseArray",faces.toString());
         if (!detector.isOperational()) {
             Log.w(TAG, "Face detector dependencies is not available");
             return;
@@ -75,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
         Frame frame = new Frame.Builder().setBitmap(bitMap).build();
 
         SparseArray<Face> faces = detector.detect(frame);
+
         if (!detector.isOperational()) {
             Log.w(TAG, "Face detector dependencies is not available");
             return;
@@ -88,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void openGallery(){
         option = true;
-        Intent gallery = new Intent(Intent.ACTION_PICK,MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+        Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
         startActivityForResult(gallery,PICK_IMAGE);
     }
 
@@ -116,4 +121,5 @@ public class MainActivity extends AppCompatActivity {
         Intent gallery = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(gallery,0);
     }
+
 }
